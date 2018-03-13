@@ -57,7 +57,7 @@ export default {
 
     handle_get_cityList_success (res) {
       const data = res.data
-      console.log(data)
+      // console.log(data)
       if (data && data.data) {
         this.cityList = data.data.cityList
       }
@@ -68,7 +68,7 @@ export default {
     /* ...mapMutations({
       change_city: 'change_city'
     }) */
-    /* handle_change_city (city) {
+    handle_change_city (city) {
       // this.$store.commit('mutations中自定义的函数名字', 传给mutations的参数也是可以传一个对象的)
       // 调用mutations中的方法修改state
       // mutations放的都是一些同步的方法
@@ -77,25 +77,7 @@ export default {
       // 用   ...mapMutations(['change_city']) // 66/67 行代码
       // 这时handle_change_city()就没用了, template里面也得改,看 22 行代码
       this.handle_back_btn_click()
-      console.log(city)
-    } */
-
-    // actions 异步操作---------------------------------------------------
-    // 把 mapActions 映射进来
-    /* ...mapActions({
-      change_city: 'set_city_after_six_seconds'
-    }) */
-    handle_change_city (city) {
-      // this.$store.dispatch('actions 中自定义的函数名字', 传给 actions 的参数也是可以传一个对象的)
-      // 调用mutations中的方法修改state
-      // mutations放的都是一些同步的方法
-      // this.$store.dispatch('change_city', city)
-      this.$store.dispatch('set_city_after_six_seconds', city)
-      // 也可以不用上面的写法,
-      // 用   ...mapActions(['set_city_after_six_seconds']) 83行代码
-      // 这时handle_change_city()就没用了, template里面也得改,看 22 行代码
-      this.handle_back_btn_click()
-      console.log(city)
+      // console.log(city)
     }
   }
 }

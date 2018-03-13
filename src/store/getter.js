@@ -1,14 +1,9 @@
 // 也可以理解为stste 的computed(计算属性)
 // 对以前的数据包装下,再给你一个新数据
+// Vuex 允许我们在 store 中定义“getter”（可以认为是 store 的计算属性）。就像计算属性一样
+// getter 的返回值会根据它的依赖被缓存起来，且只有当它的依赖值发生了改变才会被重新计算
 export default {
-  doubleCity (state, getters) {
-    return state.city + '^_^' + state.city
-  },
 
-  // getter里面还可以再用getter
-  tripleCity (state, getters) {
-    return state.city + getters.doubleCity
-  }
 }
 
 // 例如购物车中

@@ -1,79 +1,65 @@
 <template>
-  <div class="main">
-    <div class="css-city-content">
-      {{city}}
-      <!-- {{tripleCity}} -->
-    </div>
-    <div
-      class="css-change-city-btn"
-      @click="handle_change_city_btn_click"
-    >
-      选择城市
-    </div>
+  <div>
+    <index-header :info="info"></index-header>
   </div>
 </template>
 
 <script>
-// 在单独构建的版本中辅助函数为 Vuex.mapState
-import { mapState, mapGetters } from 'vuex'
-// 上面是解构赋值  ES5写法如下:
-/*
-  var vuex = require("vuex")
-  var mapState = vuex.mapState
-  var mapGetters = vuex.mapGetters
-*/
+import { mapState } from 'vuex'
+import axios from 'axios'
 export default {
   name: 'HomePage',
-  data () {
-    return {}
+  components: {
+    IndexHeader: () => import('./header.vue')
   },
-
-  methods: {
-    handle_change_city_btn_click () {
-      this.$router.push('/city')
+  data () {
+    return {
+      info: ''
     }
   },
 
-  computed: {
-    // 从state 里面拿的数据
-    /* city () {
-      return this.$store.state.city
-    } */
-    ...mapState(['city'])
-    /* ...mapState({
-      city: 'city'
-    }) */
+  created () {
+    this.getHomePageData()
+    console.log(123)
+  },
+  watch: {
+    city () {
+      this.getHomePageData()
+    }
+  },
+  /* watch: {
+    '$route': 'getHomePageData'
+  }, */
+  /* activated () {
+    this.getHomePageData()
+  }, */
 
-    // 从getter里卖弄拿数据
-    /* city () {
-      // return this.$store.getters.doubleCity
-      return this.$store.getters.tripleCity
-    } */
-    // ...mapGetters(['tripleCity'])
-    /* ...mapGetters({
-      city: 'tripleCity'
-    }) */
+  computed: {
+    ...mapState(['city'])
+  },
+
+  methods: {
+    getHomePageData () {
+      console.log(this.city)
+      axios.get('/static/homePage.json?city=' + this.city)
+        .then(this.handle_get_homePage_success.bind(this))
+        .catch(function (error) {
+          console.log(error)
+        })
+    },
+
+    handle_get_homePage_success (res) {
+      // console.log(this.city)
+      const data = res.data
+      // console.log(this.info = data.data.header.info)
+      if (data && data.data) {
+        this.info = data.data.header.info
+      }
+    }
   }
 }
 </script>
 
 <style scoped>
-  .main {
-    display: flex;
-    justify-content: space-between;
-  }
-  .css-city-content {
-    flex: 1;
-    height: 40px;
-    line-height: 40px;
-    text-align: center;
-    background-color: #d0d;
-  }
-  .css-change-city-btn {
-    width: 100px;
-    height: 40px;
-    line-height: 40px;
-    text-align: center;
-    background-color: skyblue;
-  }
+
 </style>
